@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 
@@ -11,3 +12,11 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class PostScore(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    score = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
+    modified = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
