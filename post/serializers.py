@@ -32,6 +32,7 @@ class PostSerializer(serializers.ModelSerializer):
             if "score" in self.initial_data:
                 score = self.initial_data.get("score")
                 score["post"] = instance.id
+                score["author"] = self.context['request'].user
                 old_score = PostScore.objects.filter(author=score["author"], post=score["post"])
                 if old_score:
                     score_serializer = PostScoreSerializer(instance=old_score[0], data=score)
