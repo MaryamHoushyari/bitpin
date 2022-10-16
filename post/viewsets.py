@@ -5,10 +5,10 @@ from post.serializers import PostSerializer, PostScoreSerializer
 
 
 class PostViewSet(viewsets.ModelViewSet):
-    model = Post
+    queryset = Post.objects.all()
     serializer_class = PostSerializer
 
 
 class PostScoreViewSet(viewsets.ModelViewSet):
-    model = PostScore
+    queryset = PostScore.objects.all()
     serializer_class = PostScoreSerializer
