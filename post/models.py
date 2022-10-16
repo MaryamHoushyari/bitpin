@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from django.db.models import Avg
 
 
 class Post(models.Model):
@@ -9,6 +10,14 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     modified = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def score_average(self):
+        return self.scores.aggregate(Avg('score'))['score__avg']
+
+    @property
+    def no_score_users(self):
+        return self.scores.count()
 
     def __str__(self):
         return self.title
