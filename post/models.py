@@ -20,3 +20,6 @@ class PostScore(models.Model):
     score = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
     modified = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.score} for {self.post}'
